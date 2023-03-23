@@ -69,15 +69,30 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
+    if (!body.number) {
+        return response.status(400).json({
+            error: 'number missing'
+        })
+    }
+
     const person = {
         name: body.name,
         number: body.number,
         id: randomId()
     }
 
-    persons = persons.concat(person)
+    // if persons already contains the name, returns true.
+    const nameExists = persons.find(person => person.name === body.name)
 
-    response.json(person)
+    if (!nameExists) {
+        persons = persons.concat(person)
+        response.json(person)
+    }
+    else {
+        return response.status(400).json({
+            error: 'name must be unique'
+        })
+    }
 })
 
 const PORT = 3001
