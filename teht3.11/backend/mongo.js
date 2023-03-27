@@ -12,7 +12,6 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({
     name: String,
     number: String,
-    id: Number,
 })
 
 const Person = mongoose.model('Person', personSchema)
@@ -45,7 +44,6 @@ else if (process.argv.length === 5) {
     const personFromCommandLine = new Person({
         name: nameToBeAdded,
         number: numToBeAdded,
-        id: Math.floor(Math.random() * 1001),
     })
     personFromCommandLine.save().then(result => {
         console.log(`added ${nameToBeAdded} number ${numToBeAdded} to phonebook`)
